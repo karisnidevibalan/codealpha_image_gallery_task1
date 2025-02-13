@@ -1,1 +1,2 @@
 # codealpha_tasks
+This Image Gallery is a simple and responsive web application that allows users to browse, upload, and manage images efficiently. Built with HTML, CSS, and JavaScript, it offers a user-friendly interface with features like image previews, filtering, and fullscreen viewing. The gallery is designed to be lightweight and adaptable across different screen sizes. It supports dynamic image loading for a seamless experience. Future enhancements may include drag-and-drop uploads and category-based filtering. Contributions and feedback are welcome! 🚀
