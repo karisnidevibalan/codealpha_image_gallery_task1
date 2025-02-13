@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Code Alpha's Image Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        body {
+            background: bisque;
+        }
+
+        .img-gallery {
+            width: 60%;
+            margin: 100px auto 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-gap: 50px;
+        }
+
+        .img-gallery img {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .img-gallery img:hover {
+            transform: scale(0.8) rotate(15deg);
+            border-radius: 20px;
+            box-shadow: 0 32px 75px rgba(68, 77, 136, 0.2);
+        }
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-controls {
+            position: absolute;
+            bottom: 10%;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lightbox-controls button {
+            background-color: #fff;
+            color: #1c0c0c;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .lightbox-controls button:hover {
+            background-color: #ffd500;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="img-gallery">
+        <img src="img1.jpg" alt="Image 1">
+        <img src="img2.jpg" alt="Image 2">
+        <img src="img3.jpg" alt="Image 3" >
+        <img src="img4.jpg" alt="Image 4" width="300" height="313">
+        <img src="img5.jpg" alt="Image 5" width="300" height="313">
+        <img src="img6.jpg" alt="Image 6" width="300" height="313">
+        <img src="img7.jpg" alt="Image 7" width="300" height="313">
+        <img src="img8.jpg" alt="Image 8" width="300" height="313">
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">X</span>
+        <img src="" id="lightboxImage" alt="Lightbox Image">
+        <div class="lightbox-controls">
+            <button id="prevButton" onclick="showPrevImage()">&laquo; Previous</button>
+            <button id="nextButton" onclick="showNextImage()">Next &raquo;</button>
+        </div>
+    </div>
+
+    <script>
+        const galleryImages = document.querySelectorAll('.img-gallery img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        let currentImageIndex = 0;
+
+        // Open lightbox
+        galleryImages.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                lightbox.style.display = 'flex';
+                lightboxImage.src = image.src;
+                currentImageIndex = index;
+                updateButtonVisibility();
+            });
+        });
+
+        // Close lightbox
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+
+        // Show previous image
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            lightboxImage.src = galleryImages[currentImageIndex].src;
+            updateButtonVisibility();
+        }
+
+        // Show next image
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            lightboxImage.src = galleryImages[currentImageIndex].src;
+            updateButtonVisibility();
+        }
+
+        // Update button visibility
+        function updateButtonVisibility() {
+            prevButton.style.display = currentImageIndex === 0 ? 'none' : 'inline-block';
+            nextButton.style.display = currentImageIndex === galleryImages.length - 1 ? 'none' : 'inline-block';
+        }
+    </script>
+</body>
+</html>
